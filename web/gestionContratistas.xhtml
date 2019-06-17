@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Resources">
+                                <p:menuitem value="Contratistas" url="gestionContratistas.xhtml" />
+                                <p:menuitem value="Empleados" url="gestionEmpleados.xhtml" />
+                                
+
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    
+                    <h:form id="formularioContratista">
+                        <p:messages id="mensajes" showDetail="true" />
+                        <p:panelGrid id="panelContratista" columns="6">
+                            <p:outputLabel value="Nit Contratista" />
+                            <p:inputText id="txtNit"  binding="#{contratistaVista.txtNitContratista}" 
+                                        required="true" requiredMessage="El nit es obligatorio"/>
+                            <p:outputLabel value="Nombre Contratista" />
+                            <p:inputText id="txtNombre" binding="#{contratistaVista.txtNombreContratista}" 
+                                        required="true" requiredMessage="El nombre es obligatorio" />
+                            <p:selectOneMenu id="cmbEstado" binding="#{contratistaVista.cmbEstadoContratista}">
+                                <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="INACTIVO" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:commandButton value="Registrar" actionListener="#{contratistaVista.registrarContratista()}"
+                                         update="formularioContratista" 
+                                         binding="#{contratistaVista.btnRegistrar}"/>
+                        <p:commandButton value="Modificar" actionListener="#{contratistaVista.modificarContratista()}"
+                                         update="formularioContratista" 
+                                         binding="#{contratistaVista.btnModificar}" disabled="true"/>
+                        <p:commandButton value="Eliminar" action="#{contratistaVista.eliminarContratista()}" 
+                                         update="formularioContratista" disabled="true"
+                                         binding="#{contratistaVista.btnEliminar}">
+                            <p:confirm header="Confirmation" message="Esta seguro de eliminarlo?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                        </p:confirmDialog>
+                        
+                        <p:commandButton value="Limpiar" actionListener="#{contratistaVista.limpiar()}"
+                                         update="formularioContratista" />
+                            
+                    <p:dataTable var="c" value="#{contratistaVista.listaContratista}"
+                                 paginator="true"
+                                 rows="10"
+                                 rowKey="#{c.codigocontratista}"
+                                 filteredValue="#{contratistaVista.listaContratistasFiltered}"
+                                 selection="#{contratistaVista.selectedContratista}"
+                                 selectionMode="single">
+                                 
+                        <p:ajax event="rowSelect" listener="#{contratistaVista.seleccionarContratista}"
+                                update=":formularioContratista" />
+                        <p:column headerText="Nit">
+                            <h:outputText value="#{c.nitcontratista}" />
+                        </p:column>
+ 
+                        <p:column headerText="Nombre" filterBy="#{c.nombrecontratista}" filterMatchMode="contains">
+                             <h:outputText value="#{c.nombrecontratista}" />
+                        </p:column>
+ 
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{c.estadocontratista}" />
+                        </p:column>
+ 
+                        <p:column headerText="Codigo">
+                             <h:outputText value="#{c.codigocontratista}" />
+                         </p:column>
+                        
+                        <p:column headerText="Numero Contratos">
+                            <h:outputText value="#{c.contratosList.size()}" />
+                        </p:column>
+                        
+                     </p:dataTable>
+                    </h:form>   
+                   
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

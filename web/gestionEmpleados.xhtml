@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Gestion Empleados</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Resources">
+                                <p:menuitem value="Contratistas" url="gestionContratistas.xhtml" />
+                                <p:menuitem value="Empleados" url="gestionEmpleados.xhtml" />
+                                
+
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form id="formularioEmpleado">
+                        <p:messages id="mensajes" showDetail="true" />
+                        <p:panelGrid id="panelEmpleado" columns="10">
+                            <p:outputLabel value="Cedula" />
+                            <p:inputText id="txtCedulaEmpleado"  binding="#{empleadoVista.txtCedulaEmpleado}" 
+                                        required="true" requiredMessage="la cedula es obligatorio"/>
+                            <p:outputLabel value="Nombre" />
+                            <p:inputText id="txtNombreEmpleado"  binding="#{empleadoVista.txtNombreEmpleado}" 
+                                        required="true" requiredMessage="El nombre es obligatorio"/>
+                            <p:outputLabel value="Apellidos" />
+                            <p:inputText id="txtApellidoEmpleado"  binding="#{empleadoVista.txtApellidoEmpleado}" 
+                                        required="true" requiredMessage="El apellido es obligatorio"/>
+                            <p:outputLabel value="Telefono" />
+                            <p:inputText id="txtTelefonoEmpleado"  binding="#{empleadoVista.txtTelefonoEmpleado}"/>
+                            <p:outputLabel value="Estado" />    
+                            <p:selectOneMenu id="cmbEstadoEmpleado" binding="#{empleadoVista.cmbEstadoEmpleado}">
+                                <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="INACTIVO" />
+                            </p:selectOneMenu>                                                   
+                        </p:panelGrid>
+                        <p:commandButton value="Registrar" actionListener="#{empleadoVista.registrarEmpleado()}"
+                                         update="formularioEmpleado" 
+                                         binding="#{empleadoVista.btnRegistrar}"/>
+                        <p:commandButton value="Modificar" actionListener="#{empleadoVista.modificarEmpleado()}"
+                                         update="formularioEmpleado" 
+                                         binding="#{empleadoVista.btnModificar}" />
+                        <p:commandButton value="Eliminar" action="#{empleadoVista.eliminarEmpleado()}" 
+                                         update="formularioEmpleado"
+                                         binding="#{empleadoVista.btnEliminar}">
+                            <p:confirm header="Confirmation" message="Esta seguro de eliminarlo?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                        </p:confirmDialog>
+                        <p:commandButton value="Limpiar" actionListener="#{empleadoVista.limpiar()}"
+                                         update="formularioEmpleado" />
+                        
+                        <p:dataTable var="emp" value="#{empleadoVista.listaEmpleado}"
+                                 paginator="true"
+                                 rows="10"
+                                 rowKey="#{emp.codigoempleado}"
+                                 filteredValue="#{empleadoVista.listaEmpleadoFiltered}"
+                                 selection="#{empleadoVista.selectedEmpleado}"
+                                 selectionMode="single">
+                            <p:ajax event="rowSelect" listener="#{empleadoVista.seleccionarEmpleado}"
+                                update=":formularioEmpleado" />
+                            <p:column headerText="Cedula">
+                                <h:outputText value="#{emp.cedulaempleado}" />
+                            </p:column>
+ 
+                            <p:column headerText="Nombre" filterBy="#{emp.nombreempleado}" filterMatchMode="contains">
+                                <h:outputText value="#{emp.nombreempleado}" />
+                            </p:column>
+                        
+                            <p:column headerText="Apellidos" filterBy="#{emp.apellidoempleado}" filterMatchMode="contains">
+                                <h:outputText value="#{emp.apellidoempleado}" />
+                            </p:column>
+                        
+                            <p:column headerText="Telefono" filterBy="#{emp.telefonoempleado}" filterMatchMode="contains">
+                                <h:outputText value="#{emp.telefonoempleado}" />
+                            </p:column>
+ 
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{emp.estadoempleado}" />
+                            </p:column>
+ 
+                            <p:column headerText="Codigo Empleado">
+                                <h:outputText value="#{emp.codigoempleado}" />
+                            </p:column>
+                        
+                        </p:dataTable>
+                        
+                    </h:form>
+                                      
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
