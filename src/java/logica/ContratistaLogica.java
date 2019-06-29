@@ -5,9 +5,12 @@
  */
 package logica;
 
+import java.io.File;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import jxl.Sheet;
+import jxl.Workbook;
 import modelo.Contratista;
 import persistencia.ContratistaFacadeLocal;
 
@@ -104,4 +107,28 @@ public class ContratistaLogica implements ContratistaLogicaLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public String importarDatosContratista(String archivo) throws Exception {
+        Workbook libro = Workbook.getWorkbook(new File(archivo));
+        Sheet hoja = libro.getSheet(0);
+        int filas = hoja.getRows();
+        int contratistasN = 0, contratistasE=0;
+        for(int i=4; i < filas;i++){
+            Contratista nuevoContratista = new Contratista();
+            nuevoContratista.setNitcontratista(
+                Long.parseLong(hoja.getCell(0,i).getContents()));
+            nuevoContratista.setNombrecontratista(
+                hoja.getCell(1,i).getContents());
+            Contratista objC = contratistaDAO.findxNit(nuevoContratista.getNitcontratista());
+            if(objC==null){
+                contratistaDAO.create(nuevoContratista);
+                contratistasN++;
+            }
+            else{
+                contratistasE++;
+            }
+        }
+        return "Importanción correcta! contratistas creados "+contratistasN+"y Contratistas existentes "+contratistasE;
+    }
 }

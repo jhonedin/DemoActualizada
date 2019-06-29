@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import modelo.Empleado;
 import persistencia.EmpleadoFacadeLocal;
 
+
 /**
  *
  * @author Jhon

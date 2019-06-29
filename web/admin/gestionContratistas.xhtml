@@ -31,7 +31,7 @@
                             <p:submenu label="Resources">
                                 <p:menuitem value="Contratistas" url="gestionContratistas.xhtml" />
                                 <p:menuitem value="Empleados" url="gestionEmpleados.xhtml" />
-                                
+                                <p:menuitem value="Salir" action="#{usuarioVista.cerrarSesion()}" />
 
                             </p:submenu>
                         </p:menu>
@@ -106,6 +106,12 @@
                         
                      </p:dataTable>
                     </h:form>   
+                    <h:form>
+                        <p:fileUpload fileUploadListener="#{contratistaVista.subirArchivo}" mode="advanced" dragDropSupport="false"
+                        update="messages" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xls)$/" 
+                        invalidFileMessage="Solo se permiten archivos de excel"/>
+                        <p:growl id="messages" showDetail="true" />     
+                    </h:form>
                    
                 </p:layoutUnit>
 
