@@ -15,4 +15,6 @@ import modelo.Usuario;
 @Local
 public interface UsuarioLogicaLocal {
     public Usuario ingresar(Usuario usuario) throws Exception;
+   
+    
 }

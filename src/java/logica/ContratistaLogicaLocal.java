@@ -22,6 +22,7 @@ public interface ContratistaLogicaLocal {
     public List<Contratista> consultarContratistas();
     public Contratista consultarxCodigo(Integer codigo)
         throws Exception;
+    public Contratista consultarxNit(Long nit) throws Exception;
     public void eliminarContratista(Contratista c) throws Exception;
     public String importarDatosContratista(String archivo) throws Exception;
 

@@ -46,6 +46,8 @@ public class UsuarioLogica implements UsuarioLogicaLocal {
         
     }
     
+    
+    
     public String encriptarContraseña(String password) {
         String encriptMD5 = DigestUtils.md5Hex(password);
         System.out.println("md5:" + encriptMD5);

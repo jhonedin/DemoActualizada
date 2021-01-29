@@ -73,6 +73,15 @@
                         
                         <p:commandButton value="Limpiar" actionListener="#{contratistaVista.limpiar()}"
                                          update="formularioContratista" />
+                        
+                        <p:commandButton value="Generar Reporte Ingresos"
+                                         ajax="false"
+                                         action="#{contratistaVista.generarReporteParametros()}" />
+                        <p:commandButton value="Generar Reporte Contratos Contratista"
+                                         ajax="false"
+                                         action="#{contratistaVista.generarReporteListas()}" />
+                   
+                       
                             
                     <p:dataTable var="c" value="#{contratistaVista.listaContratista}"
                                  paginator="true"
@@ -80,7 +89,10 @@
                                  rowKey="#{c.codigocontratista}"
                                  filteredValue="#{contratistaVista.listaContratistasFiltered}"
                                  selection="#{contratistaVista.selectedContratista}"
-                                 selectionMode="single">
+                                 selectionMode="single"
+                                 id="tablaC" >
+                        
+                                
                                  
                         <p:ajax event="rowSelect" listener="#{contratistaVista.seleccionarContratista}"
                                 update=":formularioContratista" />
@@ -105,12 +117,33 @@
                         </p:column>
                         
                      </p:dataTable>
+                        
+                     <h3>Export Page Data Only</h3>
+                     <h:commandLink>
+                        <p:graphicImage url="../images/excel.png" />
+                        <p:dataExporter type="xls" target="tablaC" fileName="contratistaExcel" pageOnly="false"/>
+                    </h:commandLink>
+ 
+                    <h:commandLink>
+                        <p:graphicImage url="../images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaC" fileName="contratistaPDF" pageOnly="false" />
+                    </h:commandLink>
+ 
+                    
+ 
+                    
                     </h:form>   
                     <h:form>
                         <p:fileUpload fileUploadListener="#{contratistaVista.subirArchivo}" mode="advanced" dragDropSupport="false"
                         update="messages" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xls)$/" 
                         invalidFileMessage="Solo se permiten archivos de excel"/>
                         <p:growl id="messages" showDetail="true" />     
+                    </h:form>
+                    <h:form>
+                        <p:commandButton value="Generar reporte contratistas"
+                                         ajax="false"
+                                         action="#{contratistaVista.generarReporte()}">
+                        </p:commandButton>
                     </h:form>
                    
                 </p:layoutUnit>

@@ -131,4 +131,9 @@ public class ContratistaLogica implements ContratistaLogicaLocal {
         }
         return "Importanción correcta! contratistas creados "+contratistasN+"y Contratistas existentes "+contratistasE;
     }
+
+    @Override
+    public Contratista consultarxNit(Long nit) throws Exception {
+        return contratistaDAO.findxNit(nit);
+    }
 }

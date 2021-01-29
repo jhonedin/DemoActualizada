@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="675b52a7-0968-456f-8155-22038b7873c4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nit" class="java.lang.Long"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="estado" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select ingreso.*, empleado.nombreempleado from ingreso join contratista 
+on ingreso.contratistaingreso = contratista.codigocontratista
+join empleado on ingreso.empleadoingreso = empleado.codigoempleado
+where contratista.nitcontratista = $P{nit}]]>
+	</queryString>
+	<field name="numeroingreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaingreso" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="horaentradaingreso" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="horasalidaingreso" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="autorizadoingreso" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empleadoingreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contratistaingreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreempleado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="14" width="329" height="20" forecolor="#FF0000" uuid="7cf5e610-2e80-42ed-a79b-330d9ac03c05"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE INGRESOS POR CONTRATISTAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="104" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="40" width="100" height="20" uuid="41d99f6c-4ab7-4dbd-b30a-7a135b98a9f9"/>
+				<textFieldExpression><![CDATA[$P{nit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="40" width="100" height="20" uuid="3657cbd6-f022-4dee-ad96-4ab66fd78acc"/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="40" width="100" height="20" uuid="4f51fb01-a869-4ace-9c52-ddae42ae8d7d"/>
+				<textFieldExpression><![CDATA[$P{estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="0" width="155" height="20" uuid="8294bbbc-eaa1-4007-8c34-3e3e44b4eba0"/>
+				<text><![CDATA[Informacion del contratista]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="0" width="100" height="20" uuid="d1e75a5c-33dd-4d12-a30c-eef7baf883ac"/>
+				<text><![CDATA[fechaingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="4" width="100" height="20" uuid="5f34cd14-20ad-4438-90ce-656e68e4d769"/>
+				<text><![CDATA[horaentradaingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="4" width="100" height="20" uuid="e0c78057-7536-4c73-a934-67f8c7ed7992"/>
+				<text><![CDATA[horasalidaingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="0" width="100" height="20" uuid="aa070754-caa3-4fa7-a01f-4aadf4511829"/>
+				<text><![CDATA[nombreempleado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="0" width="100" height="20" uuid="465c2a93-ae84-42db-850b-7057a1d2e6fc"/>
+				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="0" width="123" height="20" uuid="014ef06e-ddc2-4b21-bce8-f592203dd3bf"/>
+				<textFieldExpression><![CDATA[$F{horaentradaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="0" width="112" height="20" uuid="e6353991-41c7-4812-84f6-e770d8bb5600"/>
+				<textFieldExpression><![CDATA[$F{horasalidaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="0" width="121" height="20" uuid="350047e4-9b4f-4708-be3a-0529d58f2a4b"/>
+				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
